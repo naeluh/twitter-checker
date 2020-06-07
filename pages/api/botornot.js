@@ -1,6 +1,5 @@
-// import fetch from '../../lib/fetch';
-// import unirest from 'unirest';
-// import Promise from 'bluebird';
+import fetch from 'isomorphic-fetch';
+require('es6-promise').polyfill();
 import Twitter from 'twitter-lite';
 
 const botometer = function (config) {
@@ -35,23 +34,37 @@ const botometer = function (config) {
       access_token_secret: config.access_token_secret, // from your User (oauth_token_secret)
     });
 
-    const names = ['collinskeith', 'usinjuries', 'actual_ransom'];
+    // Example POST method implementation:
+    async function postData(url = '', data = {}) {
+      // Default options are marked with *
+      const response = await fetch(url, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'x-rapidapi-host': x_rapid_api_host,
+          'x-rapidapi-key': x_rapid_api_key,
+          'content-type': 'application/json',
+          accept: 'application/json',
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(data),
+      });
+      return response.json();
+    }
 
     // get botometer score
-    function getBotometer(screen_name) {
+    async function getBotometer(data) {
       new Promise((resolve, reject) => {
         setTimeout(() => {
-          unirest
-            .post('https://osome-botometer.p.mashape.com/2/check_account')
-            // .header('X-Mashape-Key', mashape_key)
-            .header('x-rapidapi-host', x_rapid_api_host)
-            .header('x-rapidapi-key', x_rapid_api_key)
-            .header('content-type', 'application/json')
-            .header('accept', 'application/json')
-            .send(data)
-            .then(({ body }) => {
-              // writeLog(result.status, result.headers, result.body);
-              resolve(body);
+          postData('https://botometer-pro.p.rapidapi.com/2/check_account', data)
+            .then(data => {
+              console.log(data);
+              resolve(data);
+            })
+            .catch(error => {
+              console.error(error);
+              reject(error);
             });
         }, rate_limit);
       });
@@ -59,38 +72,17 @@ const botometer = function (config) {
 
     // returns a user object, their latest tweets and mentions, and bot score
     async function getBotScore(screen_name) {
-      const data = { user: null, timeline: null, mentions: null };
+      const data = {
+        timeline: await getlatestTweets(screen_name),
+        mentions: await getlatestMentions(screen_name),
+        user: await getIds(screen_name),
+      };
+
       return new Promise((resolve, reject) => {
-        // get this user's timeline - latest 200 tweets
-        this.searchTwitter('statuses/user_timeline', { screen_name, count: 200 })
-          .catch(e => {
-            // if error collecting timeline resolve with null
-            resolve(null);
-          })
-          .then(timeline => {
-            // save user and timeline data
-            data.user = timeline[0].user;
-            data.timeline = timeline;
-            // get latest 100 mentions of this user by search screen name
-            return this.searchTwitter('search/tweets', { q: `@${screen_name}`, count: 100 });
-          })
-          .catch((
-            e // if error finding mentions move on with empty array
-          ) =>
-            // because having zero mentions is meaningful
-            []
-          )
-          .then(mentions => {
-            // save mentions
-            data.mentions = mentions;
-            // get botometer scores
-            return this.getBotometer(data);
-          })
-          .catch(e => {
-            // if error on botometer resolve with null
-            resolve(null);
-          })
+        console.log(`here`);
+        getBotometer(data)
           .then(botometer => {
+            console.log(botometer);
             // since we already save full user object,
             // overwrite botometer user prop to keep basic user data
             if (
@@ -110,6 +102,10 @@ const botometer = function (config) {
             if (!include_timeline && data.hasOwnProperty('timeline')) delete data.timeline;
             if (!include_mentions && data.hasOwnProperty('mentions')) delete data.mentions;
             resolve(data);
+          })
+          .catch(error => {
+            console.error(error);
+            reject(error);
           });
       });
     }
@@ -130,32 +126,33 @@ const botometer = function (config) {
       cb(scores);
     }
 
-    async function getIds(names) {
-      const users = await client.post('users/lookup', {
-        screen_name: names,
+    async function getIds(username) {
+      const user = await client.post('users/lookup', {
+        screen_name: username,
       });
-      return users.map(user => user.id);
+      return user[0];
     }
 
     async function getlatestTweets(username) {
       const data = await client.get('statuses/user_timeline', {
         screen_name: username,
-        count: 200,
+        count: 10,
       });
-      return data.map(s => ({ id: s.id, text: s.text }));
+      return data.map(d => d);
     }
 
     async function getlatestMentions(username) {
-      const data = await client.get('search/tweets', { q: `@${username}`, count: 100 });
-      return data.statuses.map(s => ({ id: s.id, text: s.text }));
+      const data = await client.get('search/tweets', { q: `@${username}`, count: 10 });
+      return data.statuses.map(d => d);
     }
 
     try {
-      const ids = await getIds(names);
-      console.log(ids);
-      const mentions = await getlatestMentions(`realDonaldTrump`);
+      // const ids = await getIds(names);
+      // console.log(ids);
+      const data = await getBotScore(`realDonaldTrump`);
       // const tweets = data.map(data => data.text);
-      console.log(mentions);
+      console.log(data);
+      return;
     } catch (error) {
       console.error(error);
     }
@@ -163,57 +160,3 @@ const botometer = function (config) {
 };
 
 export default botometer;
-
-/* import unirest from 'unirest';
-import Promise from 'bluebird';
-import Twit from 'twit';
-
-const botometer = function (config) {
-  // twitter api credentials
-  const T = new Twit({
-    consumer_key: config.consumer_key,
-    consumer_secret: config.consumer_secret,
-    app_only_auth: config.app_only_auth,
-  });
-
-  // all logging here
-  const writeLog = message => {
-    if (log_progress) console.log(message);
-  };
-
-  // search with multiple endpoints
-  this.searchTwitter = (ep, opts) =>
-    new Promise((resolve, reject) => {
-      setTimeout(() => {
-        T.get(ep, opts, (e, data, { statusCode }) => {
-          if (e || statusCode !== 200) reject(new Error(e));
-          data = ep == 'search/tweets' ? data.statuses : data;
-          resolve(data);
-        });
-      }, rate_limit);
-    });
-
-  // get botometer score
-  this.getBotometer = data =>
-    new Promise((resolve, reject) => {
-      setTimeout(() => {
-        unirest
-          .post('https://osome-botometer.p.mashape.com/2/check_account')
-          // .header('X-Mashape-Key', mashape_key)
-          .header('x-rapidapi-host', x_rapid_api_host)
-          .header('x-rapidapi-key', x_rapid_api_key)
-          .header('content-type', 'application/json')
-          .header('accept', 'application/json')
-          .send(data)
-          .then(({ body }) => {
-            // writeLog(result.status, result.headers, result.body);
-            resolve(body);
-          });
-      }, rate_limit);
-    });
-
-
-};
-
-export default botometer;
- */

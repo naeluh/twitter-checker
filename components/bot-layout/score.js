@@ -80,6 +80,7 @@ export default function Score({ screen_name }) {
           align-items: center;
         }
         .center-col {
+          text-align: center;
           flex-direction: column;
         }
         .large {

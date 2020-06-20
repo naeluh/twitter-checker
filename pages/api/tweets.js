@@ -1,6 +1,6 @@
 import fetch from '../../lib/fetch';
 
-const QUERY = 'javascript';
+const QUERY = 'donald trump';
 const LANG = 'en';
 
 export default async function getTweets(req, res) {

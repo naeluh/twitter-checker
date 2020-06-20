@@ -8,6 +8,8 @@ import TweetSkeleton from '../components/twitter-layout/tweet-skeleton';
 import components from '../components/twitter-layout/components';
 import styles from '../components/dark-layout/dark.module.css';
 import TweetMeta from '../components/tweet-meta';
+import Score from '../components/bot-layout/score';
+import RandomTweet from '../components/landing/random-tweet';
 
 // Regex to test a valid username, you should also test for a max length of 15, but we're not using
 // the user to get the tweet
@@ -42,26 +44,27 @@ export default function Tweet({ date, ast }) {
     return <Error statusCode={404} title="This tweet could not be found" />;
   }
 
+  const Code = components.code;
+  // console.log(date, ast);
+
   return (
     <div className={`page-wrapper ${styles.theme}`}>
       <TweetMeta />
 
       <main>
         {isFallback ? <TweetSkeleton /> : <Node components={components} node={ast[0]} />}
-
-        <footer>
-          <p>
-            {isFallback
-              ? '🤯 This tweet is statically generating.'
-              : '🤯 This tweet was statically generated.'}{' '}
-            <Link href="/" passHref>
-              <A blank={false}>See how</A>
-            </Link>
-          </p>
-        </footer>
+        {isFallback ? '' : <Score screen_name={ast[0]} className={`bot-container`} />}
+        <Code>
+          <RandomTweet initialId="1253411282608205826" />
+        </Code>
       </main>
 
       <style jsx>{`
+        .bot-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
         .page-wrapper {
           color: var(--tweet-font-color);
           background: var(--bg-color);
@@ -77,7 +80,7 @@ export default function Tweet({ date, ast }) {
         footer {
           font-size: 0.875rem;
           text-align: center;
-          margin-top: -0.5rem;
+          margin-top: 1rem;
         }
       `}</style>
     </div>

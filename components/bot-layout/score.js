@@ -83,7 +83,7 @@ export default function Score({ screen_name }) {
       </DIV>{' '}
       <style jsx>{`
         span {
-          line-height: 1;
+          line-height: 1.5;
         }
         .center {
           display: flex;

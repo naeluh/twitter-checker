@@ -49,7 +49,7 @@ export default function Score({ screen_name }) {
       {loaded ? (
         <DIV className="center center-col">
           <span>
-            <strong>{user}</strong> has a score of <strong>{score}</strong>
+            <strong>@{user}</strong> has a score of <strong>{score}</strong>
           </span>
           <br />
           {score >= 2.5 ? (
@@ -74,7 +74,7 @@ export default function Score({ screen_name }) {
           <br />
           <span>
             {' '}
-            <strong>{screen_name.data.username}</strong> <span className="blink">&nbsp;...</span>
+            <strong>@{screen_name.data.username}</strong> <span className="blink">&nbsp;...</span>
           </span>
         </DIV>
       )}

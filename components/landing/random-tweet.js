@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import A from './anchor';
 import styles from './random-tweet.module.css';
@@ -25,10 +25,13 @@ async function getError(res) {
   return { message: (await res.text()) || res.statusText };
 }
 
-export default function RandomTweet({ initialId }) {
+export default function RandomTweet({ initialId, loadNewTweet }) {
   const [{ id, loading, error, success }, setState] = useState({ id: initialId, loading: false });
   const fetchTweet = async e => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
+
     setState({ id, loading: true });
 
     const res = await fetch('/api/tweets');
@@ -42,6 +45,13 @@ export default function RandomTweet({ initialId }) {
 
     setState({ id, loading: false, error });
   };
+
+  useEffect(() => {
+    if (loadNewTweet) {
+      fetchTweet();
+    }
+    return () => {};
+  }, [loadNewTweet]);
 
   return (
     <>

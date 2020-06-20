@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import botometer from '../../pages/api/botornot';
 import components from '../../components/twitter-layout/components';
+import RandomTweet from '../../components/landing/random-tweet';
 
 export default function Score({ screen_name }) {
   if (typeof screen_name === 'string') {
@@ -27,7 +28,7 @@ export default function Score({ screen_name }) {
   });
 
   const P = components.p;
-  const Code = components.code;
+  const DIV = components.div;
 
   async function checkAccount(screen_name) {
     setLoaded(false);
@@ -44,16 +45,57 @@ export default function Score({ screen_name }) {
   }, [screen_name]);
 
   return (
-    <P>
+    <DIV>
       {loaded ? (
-        <Code>
+        <DIV className="center center-col">
           {user} has a score of {score}
           <br />
-          {score >= 2.5 ? `Most likely a bot` : `Most likely not a bot`}
-        </Code>
+          {score >= 2.5 ? (
+            <span>
+              Most likely a <span className="large">🤖</span>
+            </span>
+          ) : (
+            <span>
+              Most likely{' '}
+              <strong>
+                <em>not</em>
+              </strong>{' '}
+              a <span className="large">🤖</span>
+            </span>
+          )}
+        </DIV>
       ) : (
-        <Code>loading bot score for {screen_name.data.username}...</Code>
+        <DIV className="center">
+          loading <span className="large">🤖</span> bot score for {screen_name.data.username}{' '}
+          <span className="blink">...</span>{' '}
+        </DIV>
       )}
-    </P>
+      <DIV className="center center-col">
+        <RandomTweet initialId="1274080589310824450" loadNewTweet={loaded} />
+      </DIV>{' '}
+      <style jsx>{`
+        .center {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .center-col {
+          flex-direction: column;
+        }
+        .large {
+          font-size: 3rem;
+        }
+
+        .blink {
+          animation: blinker 1s linear infinite;
+        }
+
+        @keyframes blinker {
+          50% {
+            opacity: 0;
+          }
+        }
+      `}</style>
+    </DIV>
   );
 }

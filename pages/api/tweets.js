@@ -16,7 +16,7 @@ export default async function getTweets(req, res) {
   }
 
   const response = await fetch(
-    `https://api.twitter.com/1.1/search/tweets.json?q=${QUERY}&lang=${LANG}&count=50`,
+    `https://api.twitter.com/1.1/search/tweets.json?q=${QUERY}&lang=${LANG}&count=100`,
     {
       headers: {
         authorization: `Bearer ${process.env.TWITTER_API_TOKEN}`,

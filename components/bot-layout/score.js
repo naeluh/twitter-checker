@@ -48,7 +48,9 @@ export default function Score({ screen_name }) {
     <DIV>
       {loaded ? (
         <DIV className="center center-col">
-          {user} has a score of {score}
+          <span>
+            <strong>{user}</strong> has a score of <strong>{score}</strong>
+          </span>
           <br />
           {score >= 2.5 ? (
             <span>
@@ -65,15 +67,24 @@ export default function Score({ screen_name }) {
           )}
         </DIV>
       ) : (
-        <DIV className="center">
-          loading <span className="large">&nbsp;🤖&nbsp;</span> bot score for <br />
-          {screen_name.data.username} <span className="blink">&nbsp;...</span>{' '}
+        <DIV className="center center-col">
+          <span>
+            loading <span className="large">🤖</span> score for
+          </span>
+          <br />
+          <span>
+            {' '}
+            <strong>{screen_name.data.username}</strong> <span className="blink">&nbsp;...</span>
+          </span>
         </DIV>
       )}
-      <DIV className="center center-col">
+      <DIV className="center center-col m">
         <RandomTweet initialId="1274080589310824450" loadNewTweet={loaded} />
       </DIV>{' '}
       <style jsx>{`
+        span {
+          line-height: 1;
+        }
         .center {
           display: flex;
           justify-content: center;
@@ -85,8 +96,11 @@ export default function Score({ screen_name }) {
         }
         .large {
           font-size: 3rem;
+          line-height: 1;
         }
-
+        .m {
+          margin-top: 0.5rem;
+        }
         .blink {
           animation: blinker 1s linear infinite;
         }

@@ -66,7 +66,7 @@ export default function Score({ screen_name }) {
         </DIV>
       ) : (
         <DIV className="center">
-          loading <span className="large">&nbsp;🤖&nbsp;</span> bot score for{' '}
+          loading <span className="large">&nbsp;🤖&nbsp;</span> bot score for <br />
           {screen_name.data.username} <span className="blink">&nbsp;...</span>{' '}
         </DIV>
       )}

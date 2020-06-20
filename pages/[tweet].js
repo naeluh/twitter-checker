@@ -55,7 +55,7 @@ export default function Tweet({ date, ast }) {
         {isFallback ? <TweetSkeleton /> : <Node components={components} node={ast[0]} />}
         {isFallback ? '' : <Score screen_name={ast[0]} className={`bot-container`} />}
         <Code>
-          <RandomTweet initialId="1253411282608205826" />
+          <RandomTweet initialId="1274080589310824450" />
         </Code>
       </main>
 

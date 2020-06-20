@@ -55,11 +55,20 @@ export default function RandomTweet({ initialId, loadNewTweet }) {
 
   return (
     <>
-      <Link href="/[tweet]" as={`/${id}`} passHref>
-        <A blank={false}>
-          {APP_URL}/<span className={success ? styles.id : null}>{id}</span>
-        </A>
-      </Link>
+      {!loadNewTweet ? (
+        <></>
+      ) : (
+        <>
+          {' '}
+          <Link href="/[tweet]" as={`/${id}`} passHref>
+            <a blank={`false`} className={`tweet-button`}>
+              Load a new tweet !!!
+              {/* {APP_URL}/<span className={success ? styles.id : null}>{id}</span> */}
+            </a>
+          </Link>
+        </>
+      )}
+
       <div className={styles['random-tweet']}>
         <button
           className={cn([styles['generate-tweet-button'], loading && styles['tweet-loading']])}
@@ -68,14 +77,58 @@ export default function RandomTweet({ initialId, loadNewTweet }) {
         >
           {loading ? (
             <>
-              ⏱<i> Fetching a random tweet</i>
+              <i></i>
             </>
           ) : (
-            <>&#x21BA; Click here to get a random tweet</>
+            <></>
           )}
         </button>
         {error && <span>⚠️ Error: {error.message}. Please try again</span>}
       </div>
+      <style jsx>{`
+        .center {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .center-col {
+          flex-direction: column;
+        }
+        .large {
+          font-size: 3rem;
+        }
+
+        .blink {
+          animation: blinker 1s linear infinite;
+        }
+
+        @keyframes blinker {
+          50% {
+            opacity: 0;
+          }
+        }
+
+        .tweet-button {
+          background-color: rgb(29, 161, 242);
+          border-bottom-left-radius: 9999px;
+          border-bottom-right-radius: 9999px;
+          border-top-left-radius: 9999px;
+          border-top-right-radius: 9999px;
+          border: 0 solid black;
+          box-sizing: border-box;
+          color: #fff;
+          -webkit-text-decoration: none;
+          text-decoration: none;
+          display: inline;
+          font-weight: 700;
+          padding: 15px 20px;
+          margin-top: 15px;
+        }
+
+        .tweet-button:hover {
+          filter: brightness(80%);
+        }
+      `}</style>
     </>
   );
 }

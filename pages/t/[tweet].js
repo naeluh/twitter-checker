@@ -79,6 +79,61 @@ export default function Tweet({ date, ast }) {
           text-align: center;
           margin-top: -0.5rem;
         }
+        @import url('https://fonts.googleapis.com/css?family=Inconsolata:400,700');
+
+        .tweet-button {
+          /*placement for code pen*/
+          margin: 10% 40%;
+          /*Button Text Style*/
+          font-family: 'Inconsolata', 'Helvetica', 'Arial', sans-serif;
+          font-size: inherit;
+          text-align: center;
+          font-weight: bold;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          text-decoration: none;
+          /*Button Color & Border*/
+          border: 4px solid #3c14d0;
+          color: #3c14d0;
+          background: #fff;
+          outline: none;
+          /*Position, Display, Size*/
+          position: relative;
+          display: inline-block;
+          padding: 15px 10px 14px;
+          cursor: pointer;
+          width: auto;
+        }
+
+        .tweet-button:after {
+          /*Make a:after be as big as button*/
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          /*Give a:after Border & Background color*/
+          border: 2px solid #3c14d0;
+          background-color: #3c14d0;
+          /*Decide Location of a:after..this gives a           bottom right shadow*/
+          left: 4px;
+          top: 4px;
+          /*Place a:after behind button*/
+          z-index: -1;
+          content: '';
+          /*Animation/Transition Speed*/
+          -webkit-transition: all 0.5s;
+          -moz-transition: all 0.5s;
+          -o-transition: all 0.5s;
+        }
+
+        .tweet-button:hover {
+          top: 2px;
+          left: 2px;
+        }
+
+        .tweet-button:hover:after {
+          top: -2px;
+          left: -2px;
+        }
       `}</style>
     </div>
   );

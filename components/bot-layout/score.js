@@ -2,85 +2,35 @@ import React, { useState, useEffect } from 'react';
 import botometer from '../../pages/api/botornot';
 import components from '../../components/twitter-layout/components';
 import RandomTweet from '../../components/landing/random-tweet';
+import Button from './button';
 
 export default function Score({ screen_name }) {
   if (typeof screen_name === 'string') {
     return screen_name;
   }
 
-  const [loaded, setLoaded] = useState(false);
-  const [score, setScore] = useState(0);
-  const [user, setUser] = useState('');
+  const [twitterData, setTwitterData] = useState(false);
 
-  const B = new botometer({
-    consumer_key: process.env.CONSUMER_KEY,
-    consumer_secret: process.env.CONSUMER_SECRET,
-    access_token: process.env.ACCESS_TOKEN,
-    access_token_secret: process.env.ACCESS_TOKEN_SECRET,
-    x_rapid_api_host: process.env.X_RAPID_API_HOST,
-    x_rapid_api_key: process.env.X_RAPID_API_KEY,
-    app_only_auth: true,
-    rate_limit: 0,
-    log_progress: true,
-    include_user: true,
-    include_timeline: false,
-    include_mentions: false,
-  });
-
-  const P = components.p;
   const DIV = components.div;
 
-  async function checkAccount(screen_name) {
-    setLoaded(false);
-    await B.getBatchBotScores([screen_name], data => {
-      setUser(data[0].user.screen_name);
-      setScore(data[0].botometer.scores.universal);
-    });
-    setLoaded(true);
-  }
-
   useEffect(() => {
-    checkAccount(screen_name.data.username);
-    return () => {};
-  }, [screen_name]);
+    setTwitterData(true);
+    return () => {
+      setTwitterData(false);
+    };
+  }, [screen_name.data.username]);
 
   return (
-    <DIV>
-      {loaded ? (
-        <DIV className="center center-col">
-          <span>
-            <strong>@{user}</strong> has a score of <strong>{score}</strong>
-          </span>
-          <br />
-          {score >= 2.5 ? (
-            <span>
-              Most likely a <span className="large">🤖</span>
-            </span>
-          ) : (
-            <span>
-              Most likely{' '}
-              <strong>
-                <em>not</em>
-              </strong>{' '}
-              a <span className="large">🤖</span>
-            </span>
-          )}
-        </DIV>
+    <DIV className="center center-col">
+      {twitterData ? (
+        <Button
+          username={screen_name.data.username}
+          setTwitterData={setTwitterData}
+          twitterData={twitterData}
+        />
       ) : (
-        <DIV className="center center-col">
-          <span>
-            loading <span className="large">🤖</span> score for
-          </span>
-          <br />
-          <span>
-            {' '}
-            <strong>@{screen_name.data.username}</strong> <span className="blink">&nbsp;...</span>
-          </span>
-        </DIV>
+        <></>
       )}
-      <DIV className="center center-col m">
-        <RandomTweet initialId="1274080589310824450" loadNewTweet={loaded} />
-      </DIV>{' '}
       <style jsx>{`
         span {
           line-height: 1.5;

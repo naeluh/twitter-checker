@@ -25,13 +25,12 @@ async function getError(res) {
   return { message: (await res.text()) || res.statusText };
 }
 
-export default function RandomTweet({ initialId, loadNewTweet }) {
+export default function RandomTweet({ initialId, loaded, setLoaded, setTwitterData, twitterData }) {
   const [{ id, loading, error, success }, setState] = useState({ id: initialId, loading: false });
   const fetchTweet = async e => {
     if (e) {
       e.preventDefault();
     }
-
     setState({ id, loading: true });
 
     const res = await fetch('/api/tweets');
@@ -42,28 +41,33 @@ export default function RandomTweet({ initialId, loadNewTweet }) {
     }
 
     const error = await getError(res);
-
     setState({ id, loading: false, error });
   };
 
+  console.log(twitterData);
+
+  function updateLoaded() {
+    setLoaded(false);
+    setTwitterData(false);
+  }
+
   useEffect(() => {
-    if (loadNewTweet) {
+    if (loaded) {
       fetchTweet();
     }
     return () => {};
-  }, [loadNewTweet]);
+  }, [loaded]);
 
   return (
     <>
-      {!loadNewTweet ? (
+      {!loaded ? (
         <></>
       ) : (
         <>
           {' '}
           <Link href="/[tweet]" as={`/${id}`} passHref>
-            <a blank={`false`} className={`tweet-button`}>
+            <a blank={`false`} className={`tweet-button`} onClick={updateLoaded}>
               Load a new tweet !!!
-              {/* {APP_URL}/<span className={success ? styles.id : null}>{id}</span> */}
             </a>
           </Link>
         </>

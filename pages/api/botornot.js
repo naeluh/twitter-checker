@@ -122,14 +122,19 @@ const botometer = function (config) {
       const scores = [];
       for (let name of names) {
         writeLog(`Awaiting score for ${name}`);
-        const data = await this.getBotScore(name);
-        if (data && typeof data.botometer.scores !== 'undefined') {
-          scores.push(data);
-          resolve(data);
-          writeLog(`${name} is a ${data.botometer.scores.universal}`);
-        } else {
+        try {
+          const data = await this.getBotScore(name);
+          if (data && typeof data.botometer.scores !== 'undefined') {
+            scores.push(data);
+            resolve(data);
+            writeLog(`${name} is a ${data.botometer.scores.universal}`);
+          } else {
+            reject();
+            writeLog(`No score found for ${name}`);
+          }
+        } catch (error) {
           reject();
-          writeLog(`No score found for ${name}`);
+          writeLog(error);
         }
       }
       cb(scores);

@@ -10,6 +10,7 @@ import styles from '../components/dark-layout/dark.module.css';
 import TweetMeta from '../components/tweet-meta';
 import Score from '../components/bot-layout/score';
 import RandomTweet from '../components/landing/random-tweet';
+import botometer from '../pages/api/botornot';
 
 // Regex to test a valid username, you should also test for a max length of 15, but we're not using
 // the user to get the tweet
@@ -44,16 +45,19 @@ export default function Tweet({ date, ast }) {
     return <Error statusCode={404} title="This tweet could not be found" />;
   }
 
-  const Code = components.code;
-  // console.log(date, ast);
-
   return (
     <div className={`page-wrapper ${styles.theme}`}>
       <TweetMeta />
 
       <main>
-        {isFallback ? <TweetSkeleton /> : <Node components={components} node={ast[0]} />}
-        {isFallback ? '' : <Score screen_name={ast[0]} className={`bot-container`} />}
+        {isFallback ? (
+          <TweetSkeleton />
+        ) : (
+          <>
+            <Node components={components} node={ast[0]} />
+            <Score screen_name={ast[0]} className={`bot-container`} />
+          </>
+        )}
       </main>
 
       <style jsx>{`

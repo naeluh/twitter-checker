@@ -44,11 +44,11 @@ export default function RandomTweet({ initialId, loaded, setLoaded, setTwitterDa
     setState({ id, loading: false, error });
   };
 
-  console.log(twitterData);
-
   function updateLoaded() {
-    setLoaded(false);
-    setTwitterData(false);
+    if (setLoaded instanceof Function && setTwitterData instanceof Function) {
+      setLoaded(false);
+      setTwitterData(false);
+    }
   }
 
   useEffect(() => {

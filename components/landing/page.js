@@ -24,7 +24,9 @@ function PageContent({ title, children }) {
       <main className={styles.main}>
         <article className={styles.article}>
           <header>
-            <h1>{title}</h1>
+            <h1>
+              <code>{title}</code>
+            </h1>
           </header>
           {children}
         </article>
@@ -35,7 +37,7 @@ function PageContent({ title, children }) {
 
 export default function Page({ children, title, description }) {
   return (
-    <ThemeProvider theme="light">
+    <ThemeProvider theme="dark">
       <Head>
         <title>{title}</title>
         <meta name="description" content={description} />

@@ -63,14 +63,18 @@ export default function RandomTweet({ initialId, loaded, setLoaded, setTwitterDa
       {!loaded ? (
         <></>
       ) : (
-        <>
+        <div className={cn([styles.centerCol])}>
           {' '}
           <Link href="/[tweet]" as={`/${id}`} passHref>
-            <a blank={`false`} className={`tweet-button`} onClick={updateLoaded}>
+            <a
+              blank={`false`}
+              className={cn([styles.centerCol, styles.tweetbutton, styles.m])}
+              onClick={updateLoaded}
+            >
               Load a new tweet !!!
             </a>
           </Link>
-        </>
+        </div>
       )}
 
       <div className={styles['random-tweet']}>
@@ -89,50 +93,6 @@ export default function RandomTweet({ initialId, loaded, setLoaded, setTwitterDa
         </button>
         {error && <span>⚠️ Error: {error.message}. Please try again</span>}
       </div>
-      <style jsx>{`
-        .center {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        .center-col {
-          flex-direction: column;
-        }
-        .large {
-          font-size: 3rem;
-        }
-
-        .blink {
-          animation: blinker 1s linear infinite;
-        }
-
-        @keyframes blinker {
-          50% {
-            opacity: 0;
-          }
-        }
-
-        .tweet-button {
-          background-color: rgb(29, 161, 242);
-          border-bottom-left-radius: 9999px;
-          border-bottom-right-radius: 9999px;
-          border-top-left-radius: 9999px;
-          border-top-right-radius: 9999px;
-          border: 0 solid black;
-          box-sizing: border-box;
-          color: #fff;
-          -webkit-text-decoration: none;
-          text-decoration: none;
-          display: inline;
-          font-weight: 700;
-          padding: 15px 20px;
-          margin-top: 15px;
-        }
-
-        .tweet-button:hover {
-          filter: brightness(80%);
-        }
-      `}</style>
     </>
   );
 }

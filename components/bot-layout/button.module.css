@@ -1,0 +1,47 @@
+.span {
+  line-height: 1.5;
+}
+
+.centerCol {
+  text-align: center;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.large {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.blink {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.tweetbutton {
+  background-color: var(--link-color);
+  border-bottom-left-radius: 9999px;
+  border-bottom-right-radius: 9999px;
+  border-top-left-radius: 9999px;
+  border-top-right-radius: 9999px;
+  border: 0 solid var(--link-color);
+  box-sizing: border-box;
+  color: var(--tweet-font-color);
+  text-decoration: none;
+  display: inline;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 15px 20px;
+}
+
+.tweetbutton:hover {
+  filter: brightness(80%);
+}

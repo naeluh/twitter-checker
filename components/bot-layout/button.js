@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import botometer from '../../pages/api/botornot';
 import RandomTweet from '../../components/landing/random-tweet';
+import styles from './button.module.css';
 
 export default function button({ username, setTwitterData, twitterData }) {
-  const [didClickButton, setDidClickButton] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
   const [score, setScore] = useState(0);
@@ -11,8 +11,6 @@ export default function button({ username, setTwitterData, twitterData }) {
   const [choice, setChoice] = useState('bot');
   const not = useRef(null);
   const bot = useRef(null);
-
-  // console.log(twitterData);
 
   useEffect(() => {
     setLoaded(false);
@@ -49,38 +47,38 @@ export default function button({ username, setTwitterData, twitterData }) {
     <div>
       {loading ? (
         <>
-          <span>
+          <span className={styles.span}>
             <strong>
-              <span className={`blink`}>loading ...</span>
+              <span className={styles.blink}>loading ...</span>
             </strong>
           </span>{' '}
         </>
       ) : loaded ? (
         <>
-          <span>
+          <span className={styles.span}>
             You chose <strong>{choice}</strong>
           </span>
           <br />
           <br />
-          <span>
+          <span className={styles.span}>
             <strong>@{user}</strong> has a score of <strong>{score}</strong>
           </span>
           <br />
           <br />
           {score >= 2.5 ? (
-            <span>
-              Most likely a <span className="large">🤖</span>
+            <span className={styles.span}>
+              Most likely a <span className={styles.large}>🤖</span>
             </span>
           ) : (
-            <span>
+            <span className={styles.span}>
               Most likely{' '}
               <strong>
                 <em>not</em>
               </strong>{' '}
-              a <span className="large">🤖</span>
+              a <span className={styles.large}>🤖</span>
             </span>
           )}
-          <div className="center center-col m">
+          <div className={styles.centerCol}>
             <RandomTweet
               initialId="1274080589310824450"
               loaded={loaded}
@@ -96,7 +94,7 @@ export default function button({ username, setTwitterData, twitterData }) {
             value="bot"
             type="button"
             blank={`false`}
-            className={`tweet-button`}
+            className={styles.tweetbutton}
             onClick={checkBot}
             ref={bot}
           >
@@ -107,7 +105,7 @@ export default function button({ username, setTwitterData, twitterData }) {
             value="not"
             type="button"
             blank={`false`}
-            className={`tweet-button`}
+            className={styles.tweetbutton}
             onClick={checkBot}
             ref={not}
           >
@@ -115,58 +113,6 @@ export default function button({ username, setTwitterData, twitterData }) {
           </button>
         </>
       )}
-
-      <style jsx>{`
-        span {
-          line-height: 1.5;
-        }
-        .center {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        .center-col {
-          text-align: center;
-          flex-direction: column;
-        }
-        .large {
-          font-size: 3rem;
-          line-height: 1;
-        }
-        .m {
-          margin-top: 0.5rem;
-        }
-        .blink {
-          animation: blinker 1s linear infinite;
-        }
-
-        @keyframes blinker {
-          50% {
-            opacity: 0;
-          }
-        }
-        .tweet-button {
-          background-color: rgb(29, 161, 242);
-          border-bottom-left-radius: 9999px;
-          border-bottom-right-radius: 9999px;
-          border-top-left-radius: 9999px;
-          border-top-right-radius: 9999px;
-          border: 0 solid black;
-          box-sizing: border-box;
-          color: #fff;
-          -webkit-text-decoration: none;
-          text-decoration: none;
-          display: inline;
-          font-size: 1rem;
-          font-weight: 700;
-          padding: 15px 20px;
-          margin-top: 15px;
-        }
-
-        .tweet-button:hover {
-          filter: brightness(80%);
-        }
-      `}</style>
     </div>
   );
 }

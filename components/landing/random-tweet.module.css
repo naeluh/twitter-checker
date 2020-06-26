@@ -34,6 +34,37 @@
   animation: updated 1.7s;
 }
 
+.m {
+  margin-top: 1rem;
+}
+
+.centerCol {
+  text-align: center;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tweetbutton {
+  background-color: var(--link-color);
+  border-bottom-left-radius: 9999px;
+  border-bottom-right-radius: 9999px;
+  border-top-left-radius: 9999px;
+  border-top-right-radius: 9999px;
+  border: 0 solid var(--link-color);
+  box-sizing: border-box;
+  color: var(--tweet-font-color);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 15px 20px;
+}
+
+.tweetbutton:hover {
+  filter: brightness(80%);
+}
+
 @keyframes updated {
   30% {
     background-color: yellow;

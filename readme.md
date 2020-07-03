@@ -1,6 +1,6 @@
-# Bot or not
+# Bot or Not
 
-it combines twitter api and botometer api
+Combines twitter api and botometer api
 
 # Demo 
 

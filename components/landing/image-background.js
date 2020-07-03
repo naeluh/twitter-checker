@@ -12,8 +12,8 @@ export default function ImageBackground({ amount }) {
     for (let index = 0; index < amount; index++) {
       let divsize = (Math.random() * 100 + 50).toFixed();
       let color = '#' + Math.round(0xffffff * Math.random()).toString(16);
-      let posx = (Math.random() * window.innerWidth - divsize).toFixed();
-      let posy = (Math.random() * window.innerHeight - divsize).toFixed();
+      let posx = (Math.random() * window.innerHeight - divsize).toFixed();
+      let posy = (Math.random() * window.innerWidth - divsize).toFixed();
       divData.push({ index: index, size: divsize, color: color, x: posx, y: posy });
     }
 

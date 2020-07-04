@@ -1,14 +1,5 @@
-import components from '../components/twitter-layout/components';
 import Page from '../components/landing/page';
-import A from '../components/landing/anchor';
 import ImgBk from '../components/landing/image-background';
-
-const P = components.p;
-const Code = components.code;
-const Ul = components.ul;
-const Li = components.li;
-const H2 = components.h2;
-const Hr = components.hr;
 
 export default function Demo({ gifJson }) {
   return (
@@ -20,13 +11,9 @@ export default function Demo({ gifJson }) {
   );
 }
 
-export async function getStaticProps() {
-  const gifRes = await fetch(`https://twitter-checker.naeluh.vercel.app/api/giphy`);
+Demo.getInitialProps = async ({ req, res }) => {
+  const { origin } = absoluteUrl(req, 'localhost:3000');
+  const gifRes = await fetch(`${origin}/api/giphy`);
   const gifJson = await gifRes.json();
-
-  return {
-    props: {
-      gifJson,
-    },
-  };
-}
+  return { gifJson };
+};

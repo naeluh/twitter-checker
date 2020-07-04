@@ -21,7 +21,7 @@ export default function Demo({ gifJson }) {
 }
 
 export async function getStaticProps() {
-  const gifRes = await fetch(`/api/giphy`);
+  const gifRes = await fetch(`https://twitter-checker.naeluh.vercel.app/api/giphy`);
   const gifJson = await gifRes.json();
 
   return {

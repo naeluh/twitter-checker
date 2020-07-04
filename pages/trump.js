@@ -21,9 +21,10 @@ export default function Trump({ gifJson }) {
   );
 }
 
+// https://codeconqueror.com/blog/get-the-current-url-in-next-js
+
 export async function getStaticProps() {
-  const { origin } = absoluteUrl(req);
-  const gifRes = await fetch(`${origin}/api/giphy`);
+  const gifRes = await fetch(`https://twitter-checker.naeluh.vercel.app/api/giphy`);
   const gifJson = await gifRes.json();
 
   return {

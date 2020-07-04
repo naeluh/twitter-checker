@@ -1,7 +1,6 @@
 import React from 'react';
 
-function RandomDiv({ size, color, x, y }) {
-  console.log({ size, color, x, y });
+function RandomDiv({ size, color, x, y, gif }) {
   return (
     <div
       style={{
@@ -11,6 +10,8 @@ function RandomDiv({ size, color, x, y }) {
         top: `${x}px`,
         left: `${y}px`,
         position: 'absolute',
+        backgroundImage: `url(https://i.giphy.com/media/${gif}/giphy.webp)`,
+        backgroundSize: `cover`,
       }}
     ></div>
   );

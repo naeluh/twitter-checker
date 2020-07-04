@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import RandomDiv from './RandomDiv';
 
-export default function ImageBackground({ amount }) {
+export default function ImageBackground({ amount, gifs }) {
   const divData = [];
   const [divs, setDivs] = useState('');
   const [loaded, setLoaded] = useState(false);
@@ -14,11 +14,14 @@ export default function ImageBackground({ amount }) {
       let color = '#' + Math.round(0xffffff * Math.random()).toString(16);
       let posx = (Math.random() * window.innerHeight - divsize).toFixed();
       let posy = (Math.random() * window.innerWidth - divsize).toFixed();
-      divData.push({ index: index, size: divsize, color: color, x: posx, y: posy });
+      let gif = gifs.gifs[index].id;
+      divData.push({ index: index, size: divsize, color: color, x: posx, y: posy, gif: gif });
     }
 
-    divData.map(({ index, size, color, x, y }) => {
-      divArr.push(<RandomDiv key={index.toString()} size={size} color={color} x={x} y={y} />);
+    divData.map(({ index, size, color, x, y, gif }) => {
+      divArr.push(
+        <RandomDiv key={index.toString()} size={size} color={color} x={x} y={y} gif={gif} />
+      );
     });
 
     setDivs(divArr);
@@ -26,8 +29,6 @@ export default function ImageBackground({ amount }) {
 
     return () => {};
   }, []);
-
-  console.log(divs);
 
   return <div>{loaded ? divs : 'no divs'}</div>;
 }

@@ -10,9 +10,9 @@ const Li = components.li;
 const H2 = components.h2;
 const Hr = components.hr;
 
-export default function Demo({ gifJson }) {
+export default function Trump({ gifJson }) {
   return (
-    <Page title="Image Tester" description="Image Tester">
+    <Page title="Trump Image Tester" description="Trump Image Tester">
       <main>
         <ImgBk amount={100} gifs={gifJson} />
       </main>

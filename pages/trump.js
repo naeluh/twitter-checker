@@ -2,7 +2,6 @@ import components from '../components/twitter-layout/components';
 import Page from '../components/landing/page';
 import A from '../components/landing/anchor';
 import ImgBk from '../components/landing/image-background';
-import absoluteUrl from 'next-absolute-url';
 
 const P = components.p;
 const Code = components.code;

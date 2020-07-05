@@ -1,0 +1,12 @@
+@keyframes move {
+  50% {
+    transform: translateX(50vw);
+  }
+  50.001% {
+    transform: translateX(-100vw);
+  }
+}
+
+.images {
+  animation: move linear infinite;
+}

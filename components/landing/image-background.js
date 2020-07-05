@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import RandomDiv from './RandomDiv';
+import RandomDiv from './random-div';
 
 export default function ImageBackground({ amount, gifs }) {
   const divData = [];
@@ -12,7 +12,7 @@ export default function ImageBackground({ amount, gifs }) {
     for (let index = 0; index < amount; index++) {
       let divsize = (Math.random() * 15 + 10).toFixed();
       let color = '#' + Math.round(0xffffff * Math.random()).toString(16);
-      let posx = (Math.random() * window.innerHeight - divsize).toFixed();
+      let posx = (Math.random() * 100 + 0).toFixed();
       let posy = (Math.random() * window.innerWidth - divsize).toFixed();
       let gif = gifs.gifs[index].id;
       divData.push({ index: index, size: divsize, color: color, x: posx, y: posy, gif: gif });

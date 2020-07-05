@@ -1,7 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import styles from './random-div.module.css';
 
 function RandomDiv({ size, color, x, y, gif }) {
   const targetRef = useRef();
+  const duration = (Math.random() * 10 + 1).toFixed();
 
   function handleResize() {
     let divsize = (Math.random() * 15 + 10).toFixed();
@@ -24,17 +26,19 @@ function RandomDiv({ size, color, x, y, gif }) {
 
   return (
     <div
+      className={styles.images}
       ref={targetRef}
       style={{
         width: `${size}vw`,
         height: `${size}vh`,
         backgroundColor: color,
-        top: `${x}px`,
-        left: `${y}px`,
+        top: `${y}px`,
+        left: `${x}%`,
         position: 'absolute',
         backgroundImage: `url(https://i.giphy.com/media/${gif}/giphy.webp)`,
         backgroundSize: `cover`,
         backgroundPosition: `center center`,
+        animationDuration: `${duration}s`,
       }}
     ></div>
   );

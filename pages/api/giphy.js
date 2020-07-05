@@ -15,8 +15,10 @@ export default async function getGifs(req, res) {
 
   const QUERY = req.query.q;
 
+  console.log(QUERY);
+
   const response = await fetch(
-    `https://api.giphy.com/v1/gifs/search?api_key=${process.env.GIPHY_API_TOKEN}&q=donaldtrump&limit=${QUERY}&offset=0&rating=G&lang=${LANG}`
+    `https://api.giphy.com/v1/gifs/search?api_key=${process.env.GIPHY_API_TOKEN}&q=${QUERY}&limit=45&offset=0&rating=G&lang=${LANG}`
   );
 
   if (response.ok) {

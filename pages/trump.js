@@ -14,7 +14,7 @@ export default function Trump({ gifJson }) {
 
 Trump.getInitialProps = async ({ req, res }) => {
   const { origin } = absoluteUrl(req, 'localhost:3000');
-  const gifRes = await fetch(`${origin}/api/giphy?q=40`);
+  const gifRes = await fetch(`${origin}/api/giphy?q=donaldtrump`);
   const gifJson = await gifRes.json();
   return { gifJson };
 };

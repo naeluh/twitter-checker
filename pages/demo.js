@@ -13,7 +13,7 @@ export default function Demo({ gifJson }) {
 
 Demo.getInitialProps = async ({ req, res }) => {
   const { origin } = absoluteUrl(req, 'localhost:3000');
-  const gifRes = await fetch(`${origin}/api/giphy?q=20`);
+  const gifRes = await fetch(`${origin}/api/giphy?q=donaldtrump`);
   const gifJson = await gifRes.json();
   return { gifJson };
 };

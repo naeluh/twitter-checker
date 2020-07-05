@@ -6,11 +6,11 @@ export default function ImageBackground({ amount, gifs }) {
   const [divs, setDivs] = useState('');
   const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
+  const buildDivs = () => {
     const divArr = [];
 
     for (let index = 0; index < amount; index++) {
-      let divsize = (Math.random() * 100 + 50).toFixed();
+      let divsize = (Math.random() * 15 + 10).toFixed();
       let color = '#' + Math.round(0xffffff * Math.random()).toString(16);
       let posx = (Math.random() * window.innerHeight - divsize).toFixed();
       let posy = (Math.random() * window.innerWidth - divsize).toFixed();
@@ -26,7 +26,10 @@ export default function ImageBackground({ amount, gifs }) {
 
     setDivs(divArr);
     setLoaded(true);
+  };
 
+  useEffect(() => {
+    buildDivs();
     return () => {};
   }, []);
 

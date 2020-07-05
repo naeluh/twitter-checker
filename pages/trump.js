@@ -6,7 +6,7 @@ export default function Trump({ gifJson }) {
   return (
     <Page title="Trump Image Tester" description="Trump Image Tester">
       <main>
-        <ImgBk amount={100} gifs={gifJson} />
+        <ImgBk amount={20} gifs={gifJson} />
       </main>
     </Page>
   );
@@ -14,7 +14,7 @@ export default function Trump({ gifJson }) {
 
 Trump.getInitialProps = async ({ req, res }) => {
   const { origin } = absoluteUrl(req, 'localhost:3000');
-  const gifRes = await fetch(`${origin}/api/giphy`);
+  const gifRes = await fetch(`${origin}/api/giphy?q=20`);
   const gifJson = await gifRes.json();
   return { gifJson };
 };

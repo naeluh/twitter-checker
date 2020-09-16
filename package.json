@@ -41,7 +41,7 @@
     "next": "^9.4.5-canary.3",
     "next-absolute-url": "^1.2.2",
     "node-botometer-rapid-api": "^1.0.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "rehype-parse": "^6.0.2",

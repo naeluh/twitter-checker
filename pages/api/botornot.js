@@ -52,14 +52,12 @@ const botometer = function (config) {
   this.getBotometer = function (data) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        postData('https://botometer-pro.p.rapidapi.com/2/check_account', data)
+        postData('https://botometer-pro.p.rapidapi.com/4/check_account', data)
           .then(data => {
-            console.log(data);
             resolve(data);
             return data;
           })
           .catch(error => {
-            console.error(error);
             reject(error);
           });
       }, rate_limit);
@@ -68,7 +66,6 @@ const botometer = function (config) {
 
   // returns a user object, their latest tweets and mentions, and bot score
   this.getBotScore = async function (screen_name) {
-    const baseUrl = `http://localhost:3000/`;
     const timelineRes = await fetch(`/api/tweet?q=${screen_name}`);
     const mentionsRes = await fetch(`/api/mention?q=${screen_name}`);
     const userRes = await fetch(`/api/user?q=${screen_name}`);
@@ -106,11 +103,9 @@ const botometer = function (config) {
           if (!include_timeline && data.hasOwnProperty('timeline')) delete data.timeline;
           if (!include_mentions && data.hasOwnProperty('mentions')) delete data.mentions;
 
-          console.log(data);
           resolve(data);
         })
         .catch(error => {
-          console.error(error);
           reject(error);
         });
     });
@@ -124,10 +119,10 @@ const botometer = function (config) {
         writeLog(`Awaiting score for ${name}`);
         try {
           const data = await this.getBotScore(name);
-          if (data && typeof data.botometer.scores !== 'undefined') {
+          if (data && typeof data.botometer.display_scores !== 'undefined') {
             scores.push(data);
             resolve(data);
-            writeLog(`${name} is a ${data.botometer.scores.universal}`);
+            writeLog(`${name} is a ${data.botometer.display_scores.universal.overall}`);
           } else {
             reject();
             writeLog(`No score found for ${name}`);

@@ -33,9 +33,7 @@ export default function botornot() {
   const Hr = components.hr;
 
   async function checkAccount() {
-    console.log(inputEl.current.value);
     await B.getBatchBotScores([inputEl.current.value], data => {
-      console.log(data);
       setUser(data[0].user.screen_name);
       setScore(data[0].botometer.scores.universal);
       setLoading(true);

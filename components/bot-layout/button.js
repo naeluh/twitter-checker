@@ -37,7 +37,7 @@ export default function button({ username, setTwitterData, twitterData }) {
     setChoice(event.target.value);
     await B.getBatchBotScores([username], data => {
       setUser(data[0].user.screen_name);
-      setScore(data[0].botometer.scores.universal);
+      setScore(data[0].botometer.display_scores.universal.overall);
     });
     setLoading(false);
     setLoaded(true);

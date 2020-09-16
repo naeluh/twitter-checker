@@ -3,7 +3,7 @@ import ImgBk from '../components/landing/image-background';
 
 export default function Trump({ gifJson }) {
   return (
-    <Page title="Trump Image Tester" description="Trump Image Tester">
+    <Page title="" description="">
       <main>
         <ImgBk amount={40} gifs={gifJson} />
       </main>

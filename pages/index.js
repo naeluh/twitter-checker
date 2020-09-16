@@ -21,15 +21,14 @@ export default function Index({ tweet }) {
   return (
     <Page title="Bot or not" description="Bot or not">
       <main>
-        <P>
-          <RandomTweet
-            initialId="1274080589310824450"
-            loaded={true}
-            setLoaded={false}
-            setTwitterData={false}
-            twitterData={true}
-          />
-        </P>
+        <RandomTweet
+          initialId="1274080589310824450"
+          loaded={true}
+          setLoaded={false}
+          setTwitterData={false}
+          twitterData={true}
+        />
+
         <P>
           <Code>
             <A href="https://twitter.com/luis_fades">Built on static tweet by Luis Alvarez</A>

@@ -3,4 +3,4 @@
  */
 import '@github/details-dialog-element';
 
-export default () => null;
+export default DetailsDialog = () => null;

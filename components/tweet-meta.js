@@ -4,16 +4,13 @@ export default function TweetMeta() {
   // TODO: Use real tweet metadata here
   return (
     <Head>
-      <title>Static Tweet Next.js Demo</title>
-      <meta
-        name="description"
-        content="A demo showing off ahead-of-time and incremental static generation by using Tweets as the datasource"
-      />
-      <meta property="og:title" content="Static Tweet Next.js Demo" />
-      <meta property="og:site_name" content="Static Tweet Next.js Demo" />
+      <title>Bot or Not</title>
+      <meta name="description" content="A demo showing showing how to use SWR with multiple apis" />
+      <meta property="og:title" content="Bot or Not" />
+      <meta property="og:site_name" content="Bot or Not" />
       <meta
         property="og:description"
-        content="A demo showing off ahead-of-time and incremental static generation by using Tweets as the datasource"
+        content="A demo showing showing how to use SWR with multiple apis"
       />
       <meta property="og:image" content="/assets/twitter-card.png" />
       <meta name="twitter:card" content="summary_large_image" />
